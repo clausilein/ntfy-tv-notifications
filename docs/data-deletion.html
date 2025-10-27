@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion - Ntfy TV Notifications</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+        }
+
+        ol {
+            margin: 15px 0 15px 30px;
+            color: #555;
+        }
+
+        ol li {
+            margin-bottom: 10px;
+        }
+
+        .contact {
+            background: #fff9e6;
+            border: 1px solid #ffcc00;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .contact h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Deletion Request</h1>
+        <p class="subtitle">Ntfy TV Notifications - How to Delete Your Data</p>
+
+        <div class="info-box">
+            <p><strong>Important:</strong> Ntfy TV Notifications stores ALL data locally on your device. No data is sent to our servers or stored in the cloud. This means you have complete control over your data.</p>
+        </div>
+
+        <h2>How Your Data is Stored</h2>
+        <p>The app stores the following data <strong>locally on your Android TV device only</strong>:</p>
+        <ul>
+            <li>Your ntfy.sh topic subscriptions</li>
+            <li>Received notification messages</li>
+            <li>App preferences and settings</li>
+        </ul>
+        <p>No personal information, analytics, or usage data is collected or transmitted to any external servers (except your configured ntfy.sh connection).</p>
+
+        <h2>How to Delete Your Data</h2>
+        <p>Since all data is stored locally, you can delete it directly on your device using either of these methods:</p>
+
+        <h3>Method 1: Clear App Data (Keeps App Installed)</h3>
+        <ol>
+            <li>On your Android TV, go to <code>Settings</code></li>
+            <li>Navigate to <code>Apps</code> or <code>Applications</code></li>
+            <li>Find and select <code>Ntfy TV Notifications</code></li>
+            <li>Select <code>Clear data</code> or <code>Storage</code> → <code>Clear data</code></li>
+            <li>Confirm the action</li>
+        </ol>
+        <p>This will delete all subscriptions, messages, and settings while keeping the app installed.</p>
+
+        <h3>Method 2: Uninstall the App (Removes Everything)</h3>
+        <ol>
+            <li>On your Android TV, go to <code>Settings</code></li>
+            <li>Navigate to <code>Apps</code> or <code>Applications</code></li>
+            <li>Find and select <code>Ntfy TV Notifications</code></li>
+            <li>Select <code>Uninstall</code></li>
+            <li>Confirm the action</li>
+        </ol>
+        <p>This will completely remove the app and all associated data from your device.</p>
+
+        <h2>Data Deletion is Immediate</h2>
+        <p>When you clear app data or uninstall the app, all data is immediately deleted from your device. There is no additional processing time or server-side deletion required because no data is stored on our servers.</p>
+
+        <h2>What About Backups?</h2>
+        <p>If you have Android's automatic backup enabled, your device may have backed up app data to your Google account. To remove this:</p>
+        <ol>
+            <li>Go to your device <code>Settings</code> → <code>Google</code> → <code>Backup</code></li>
+            <li>Find <code>Ntfy TV Notifications</code> in the backup list</li>
+            <li>Remove it from backups if desired</li>
+        </ol>
+        <p>Note: This backup is managed by Google, not by our app.</p>
+
+        <div class="contact">
+            <h3>Need Help or Have Questions?</h3>
+            <p>If you have any questions about data deletion or privacy, please contact us:</p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:android-ntfy@clausr.net">android-ntfy@clausr.net</a></li>
+                <li><strong>GitHub Issues:</strong> <a href="https://github.com/clausilein/ntfy-tv-notifications/issues" target="_blank">Report an issue</a></li>
+                <li><strong>Privacy Policy:</strong> <a href="https://clausilein.github.io/ntfy-tv-notifications/privacy-policy.html" target="_blank">Read our full privacy policy</a></li>
+            </ul>
+            <p style="margin-top: 15px;">We typically respond within 48 hours.</p>
+        </div>
+
+        <h2>Open Source Transparency</h2>
+        <p>Our app is fully open source. You can review the complete source code to verify that no data is transmitted to external servers:</p>
+        <p><a href="https://github.com/clausilein/ntfy-tv-notifications" target="_blank">https://github.com/clausilein/ntfy-tv-notifications</a></p>
+
+        <div class="footer">
+            <p>Last updated: October 27, 2025</p>
+            <p><a href="https://clausilein.github.io/ntfy-tv-notifications/">Back to Home</a> | <a href="https://clausilein.github.io/ntfy-tv-notifications/privacy-policy.html">Privacy Policy</a></p>
+        </div>
+    </div>
+</body>
+</html>
