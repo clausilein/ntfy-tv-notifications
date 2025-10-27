@@ -208,7 +208,7 @@ This application would not be possible without the incredible work of these deve
 
 ---
 
-**Last Updated**: January 2025
+**Last Updated**: October 2025
 
 For the most up-to-date list of dependencies, see:
 - [`build.gradle.kts`](app/build.gradle.kts)

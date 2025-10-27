@@ -15,9 +15,15 @@
 local.properties
 
 # Planning and development documents (not for public repo)
-CLAUDE.md
-PLAYSTORE.md
-LEGAL_REQUIREMENTS.md
-NEXT_STEPS_TODO.md
+planning/
 build.log
 .claude/
+
+# Play Store assets (screenshots, graphics - large binary files)
+PlayStoreAssets/
+
+# App signing keystore (NEVER commit this!)
+*.jks
+*.keystore
+*.p12
+keystore.properties
