@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.NtfyTVNotifications" parent="Theme.AppCompat.DayNight.NoActionBar" />
+</resources>

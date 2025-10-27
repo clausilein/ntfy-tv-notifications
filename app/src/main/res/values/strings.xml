@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">NtfyTVNotifications</string>
+
+    <!-- Notification strings -->
+    <string name="notification_default_title">Ntfy Notification</string>
+    <string name="notification_default_message">New message</string>
+    <string name="notification_priority_urgent">Urgent message</string>
+    <string name="notification_priority_high">High priority message</string>
+    <string name="notification_priority_normal">Ntfy message</string>
+    <string name="notification_group_title">Ntfy Messages</string>
+    <string name="notification_group_text">You have new messages</string>
+    <string name="notification_ticker">New ntfy message: %1$s</string>
+</resources>
