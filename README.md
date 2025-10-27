@@ -421,7 +421,24 @@ adb logcat | grep -E "(Ntfy|WebSocket|Overlay)"
 
 ## License
 
-This is a sample project for demonstration purposes.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Author & Contact
+
+**Claus Regenbrecht**
+- Email: android-ntfy@clausr.net
+- GitHub: [@clausilein](https://github.com/clausilein)
+- Repository: [ntfy-tv-notifications](https://github.com/clausilein/ntfy-tv-notifications)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+For bug reports and feature requests, please use [GitHub Issues](https://github.com/clausilein/ntfy-tv-notifications/issues).
+
+## Acknowledgments
+
+This app uses several excellent open-source libraries. See [ATTRIBUTIONS.md](ATTRIBUTIONS.md) for full credits.
 
 ## Links
 

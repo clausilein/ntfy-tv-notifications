@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Planning and development documents (not for public repo)
+CLAUDE.md
+PLAYSTORE.md
+LEGAL_REQUIREMENTS.md
+build.log
