@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Include user preferences (NtfyConfig) -->
+    <include domain="sharedpref" path="." />
+
+    <!-- Include database (subscriptions and messages) -->
+    <include domain="database" path="." />
+
+    <!-- Note: No sensitive data like passwords or tokens are stored -->
+</full-backup-content>

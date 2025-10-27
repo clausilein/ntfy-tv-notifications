@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ntfy TV Notifications - Real-time notifications for Android TV</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .hero {
+            background: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .hero h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin: 0 0 20px 0;
+        }
+        .hero p {
+            font-size: 1.3em;
+            color: #666;
+            margin: 0 0 30px 0;
+        }
+        .badges {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .feature h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .links {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .links h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .link-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .link-list li {
+            margin: 15px 0;
+        }
+        .link-list a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        .link-list a:hover {
+            transform: translateX(5px);
+            text-decoration: underline;
+        }
+        .link-list a::before {
+            content: "→";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background 0.3s;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #764ba2;
+        }
+        .btn-secondary {
+            background: #48bb78;
+        }
+        .btn-secondary:hover {
+            background: #38a169;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.9;
+        }
+        .footer a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>📺 Ntfy TV Notifications</h1>
+            <p>Real-time ntfy.sh notifications on your Android TV</p>
+
+            <div class="badges">
+                <span class="badge">✅ Free & Open Source</span>
+                <span class="badge">🔒 Privacy-Focused</span>
+                <span class="badge">📱 Android TV Optimized</span>
+                <span class="badge">⚡ Real-time WebSocket</span>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="https://github.com/clausilein/ntfy-tv-notifications" class="btn" target="_blank">View on GitHub</a>
+                <a href="privacy-policy.html" class="btn btn-secondary">Privacy Policy</a>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>🔔 Real-time Notifications</h3>
+                <p>Receive instant notifications from ntfy.sh via WebSocket connection directly on your Android TV.</p>
+            </div>
+            <div class="feature">
+                <h3>📋 Multiple Topics</h3>
+                <p>Subscribe to and manage multiple ntfy topics simultaneously with persistent storage.</p>
+            </div>
+            <div class="feature">
+                <h3>🎨 TV-Optimized UI</h3>
+                <p>Remote-friendly interface designed specifically for Android TV with accessibility support.</p>
+            </div>
+            <div class="feature">
+                <h3>🔒 Privacy First</h3>
+                <p>All data stored locally on your device. No analytics, no tracking, no cloud sync.</p>
+            </div>
+            <div class="feature">
+                <h3>💾 Message History</h3>
+                <p>View and manage your notification history stored in local database.</p>
+            </div>
+            <div class="feature">
+                <h3>🎯 Priority Support</h3>
+                <p>Color-coded notifications based on priority levels (1-5) with tag support.</p>
+            </div>
+        </div>
+
+        <div class="links">
+            <h2>Important Links</h2>
+            <ul class="link-list">
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="https://github.com/clausilein/ntfy-tv-notifications" target="_blank">Source Code (GitHub)</a></li>
+                <li><a href="https://github.com/clausilein/ntfy-tv-notifications/issues" target="_blank">Report Issues</a></li>
+                <li><a href="https://ntfy.sh" target="_blank">ntfy.sh Official Website</a></li>
+                <li><a href="https://docs.ntfy.sh" target="_blank">ntfy.sh Documentation</a></li>
+            </ul>
+        </div>
+
+        <div class="links">
+            <h2>Features</h2>
+            <ul style="padding-left: 20px;">
+                <li>Real-time WebSocket connection to ntfy.sh</li>
+                <li>Multiple topic subscriptions with toggle support</li>
+                <li>Foreground service for persistent connection</li>
+                <li>Dual notification system (overlay + heads-up)</li>
+                <li>Room database for message history</li>
+                <li>TV remote control navigation</li>
+                <li>Priority-based color coding</li>
+                <li>Tag display support</li>
+                <li>Network connectivity checks</li>
+                <li>Smart reconnection with exponential backoff</li>
+            </ul>
+        </div>
+
+        <div class="links">
+            <h2>Contact</h2>
+            <p>
+                <strong>Developer:</strong> Claus Regenbrecht<br>
+                <strong>Email:</strong> <a href="mailto:android-ntfy@clausr.net">android-ntfy@clausr.net</a><br>
+                <strong>GitHub:</strong> <a href="https://github.com/clausilein" target="_blank">@clausilein</a>
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>
+                Ntfy TV Notifications is open source software licensed under Apache License 2.0<br>
+                <a href="https://github.com/clausilein/ntfy-tv-notifications/blob/main/LICENSE" target="_blank">View License</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
