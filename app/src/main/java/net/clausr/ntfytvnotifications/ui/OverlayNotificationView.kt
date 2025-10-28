@@ -50,18 +50,28 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import net.clausr.ntfytvnotifications.service.NtfyMessage
 import net.clausr.ntfytvnotifications.ui.theme.NtfyTVNotificationsTheme
 import net.clausr.ntfytvnotifications.util.NotificationHelper
+import net.clausr.ntfytvnotifications.util.NtfyConfig
 import net.clausr.ntfytvnotifications.util.PermissionHelper
 
-class OverlayNotificationView(private val context: Context) {
+class OverlayNotificationView(
+    private val context: Context,
+    private val config: NtfyConfig
+) {
 
     private val TAG = "OverlayNotificationView"
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
+    companion object {
+        private const val MESSAGE_GAP_MS = 1000L  // Gap between sequential messages
+    }
     private val messageQueue = mutableListOf<NtfyMessage>()
     private var isProcessingQueue = false
+    private var processQueueJob: Job? = null
 
     private var windowManager: WindowManager? = null
     private var overlayView: ComposeView? = null
@@ -105,23 +115,27 @@ class OverlayNotificationView(private val context: Context) {
     }
 
     private fun processQueue() {
-        if (isProcessingQueue || messageQueue.isEmpty()) {
+        if (processQueueJob?.isActive == true || messageQueue.isEmpty()) {
             return
         }
 
-        isProcessingQueue = true
-        scope.launch {
-            while (messageQueue.isNotEmpty()) {
-                val message = messageQueue.removeAt(0)
-                showInternal(message)
-                delay(6000) // Show for 5s + 1s gap
+        processQueueJob = scope.launch {
+            isProcessingQueue = true
+            try {
+                while (messageQueue.isNotEmpty() && isActive) {
+                    val message = messageQueue.removeAt(0)
+                    val durationMs = config.displayDurationMs // Cache duration once per message
+                    showInternal(message, durationMs)
+                    delay(durationMs + MESSAGE_GAP_MS) // Display duration + gap
+                }
+            } finally {
+                isProcessingQueue = false
             }
-            isProcessingQueue = false
         }
     }
 
     @SuppressLint("InflateParams")
-    private suspend fun showInternal(message: NtfyMessage): Boolean {
+    private suspend fun showInternal(message: NtfyMessage, durationMs: Long): Boolean {
         // Check permission before attempting to show
         if (!PermissionHelper.hasOverlayPermission(context)) {
             Log.e(TAG, "Cannot show overlay: permission not granted")
@@ -158,10 +172,10 @@ class OverlayNotificationView(private val context: Context) {
             windowManager?.addView(overlayView, layoutParams)
             isShowing = true
 
-            // Auto-dismiss after 5 seconds
+            // Auto-dismiss after configured duration
             dismissJob?.cancel()
             dismissJob = scope.launch {
-                delay(5000)
+                delay(durationMs)
                 hideInternal()
             }
             Log.d(TAG, "Overlay shown: ${message.title}")
@@ -216,8 +230,13 @@ class OverlayNotificationView(private val context: Context) {
 
     fun cleanup() {
         Log.d(TAG, "Cleaning up overlay view")
+
+        // Cancel queue processing first
+        processQueueJob?.cancel()
+        processQueueJob = null
         messageQueue.clear()
         isProcessingQueue = false
+
         dismissJob?.cancel()
         dismissJob = null
 

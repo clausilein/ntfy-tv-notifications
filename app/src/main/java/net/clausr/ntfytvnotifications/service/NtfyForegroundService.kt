@@ -25,6 +25,7 @@ import net.clausr.ntfytvnotifications.data.repository.MessageRepository
 import net.clausr.ntfytvnotifications.data.repository.SubscriptionRepository
 import net.clausr.ntfytvnotifications.ui.OverlayNotificationView
 import net.clausr.ntfytvnotifications.util.NotificationHelper
+import net.clausr.ntfytvnotifications.util.NtfyConfig
 import net.clausr.ntfytvnotifications.util.PermissionHelper
 
 class NtfyForegroundService : Service() {
@@ -32,6 +33,7 @@ class NtfyForegroundService : Service() {
     private val TAG = "NtfyForegroundService"
     // Use Main.immediate dispatcher for WindowManager operations
     private val scope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
+    private lateinit var config: NtfyConfig
     private lateinit var database: AppDatabase
     private lateinit var subscriptionRepository: SubscriptionRepository
     private lateinit var messageRepository: MessageRepository
@@ -64,6 +66,9 @@ class NtfyForegroundService : Service() {
         super.onCreate()
         Log.d(TAG, "Service created")
 
+        // Initialize configuration
+        config = NtfyConfig(applicationContext)
+
         // Initialize database and repositories
         database = AppDatabase.getInstance(applicationContext)
         messageRepository = MessageRepository(database.messageDao())
@@ -74,7 +79,7 @@ class NtfyForegroundService : Service() {
         ntfyService.setContext(applicationContext)
 
         // Initialize overlay view for showing notifications in background
-        overlayView = OverlayNotificationView(applicationContext)
+        overlayView = OverlayNotificationView(applicationContext, config)
 
         // Initialize notification channels for message notifications
         NotificationHelper.createNotificationChannels(applicationContext)

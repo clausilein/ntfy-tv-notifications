@@ -1,5 +1,6 @@
 package net.clausr.ntfytvnotifications.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -25,12 +26,14 @@ import kotlinx.coroutines.launch
 import net.clausr.ntfytvnotifications.data.db.entities.Subscription
 import net.clausr.ntfytvnotifications.data.repository.AddSubscriptionResult
 import net.clausr.ntfytvnotifications.data.repository.SubscriptionRepository
+import net.clausr.ntfytvnotifications.util.NtfyConfig
 import net.clausr.ntfytvnotifications.util.TopicValidator
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun SubscriptionsScreen(
     subscriptionRepository: SubscriptionRepository,
+    config: NtfyConfig,
     onBackPressed: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -75,6 +78,12 @@ fun SubscriptionsScreen(
                 )
             }
         }
+
+        // Notification Settings Section
+        NotificationSettingsSection(
+            config = config,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
 
         // Add subscription button
         Button(
@@ -455,6 +464,116 @@ fun DeleteConfirmationDialog(
                     }
                 }
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Composable
+fun NotificationSettingsSection(
+    config: NtfyConfig,
+    modifier: Modifier = Modifier
+) {
+    // Re-initialize state when config changes externally
+    var currentDuration by remember(config.displayDurationSeconds) {
+        mutableStateOf(config.displayDurationSeconds)
+    }
+    val durationOptions = listOf(2, 3, 5, 7, 10, 15)
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text(
+            text = "Notification Settings",
+            style = MaterialTheme.typography.headlineMedium.copy(
+                fontWeight = FontWeight.Bold,
+                fontSize = 28.sp
+            )
+        )
+
+        Text(
+            text = "Display Duration:",
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontSize = 20.sp
+            ),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            durationOptions.forEach { seconds ->
+                DurationOptionCard(
+                    seconds = seconds,
+                    isSelected = currentDuration == seconds,
+                    onClick = {
+                        currentDuration = seconds
+                        config.displayDurationSeconds = seconds
+                    }
+                )
+            }
+        }
+
+        Text(
+            text = "Notifications will stay visible for $currentDuration second${if (currentDuration == 1) "" else "s"}",
+            style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+        )
+    }
+}
+
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Composable
+fun DurationOptionCard(
+    seconds: Int,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    var isFocused by remember { mutableStateOf(false) }
+
+    Card(
+        onClick = onClick,
+        modifier = Modifier
+            .onFocusChanged { isFocused = it.isFocused || it.hasFocus }
+            .border(
+                width = if (isFocused || isSelected) 3.dp else 1.dp,
+                color = when {
+                    isFocused -> MaterialTheme.colorScheme.primary
+                    isSelected -> MaterialTheme.colorScheme.primary
+                    else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                },
+                shape = RoundedCornerShape(12.dp)
+            )
+            .semantics {
+                contentDescription = "$seconds second${if (seconds == 1) "" else "s"} duration" +
+                    if (isSelected) " (currently selected)" else ""
+            },
+        shape = CardDefaults.shape(RoundedCornerShape(12.dp)),
+        colors = CardDefaults.colors(
+            containerColor = when {
+                isSelected -> MaterialTheme.colorScheme.primary
+                isFocused -> MaterialTheme.colorScheme.surfaceVariant
+                else -> MaterialTheme.colorScheme.surface
+            }
+        )
+    ) {
+        Box(
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "${seconds}s",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                    fontSize = 22.sp
+                ),
+                color = if (isSelected)
+                    MaterialTheme.colorScheme.onPrimary
+                else
+                    MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }

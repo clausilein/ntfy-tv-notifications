@@ -7,6 +7,7 @@ An Android TV app that receives real-time notifications from [ntfy.sh](https://n
 - **Real-time WebSocket Connection**: Connects to ntfy.sh via WebSocket for instant notifications
 - **Multiple Subscriptions**: Subscribe to and manage multiple ntfy topics simultaneously with persistent storage
 - **Subscription Management UI**: Add, toggle, and delete topic subscriptions from the TV-optimized interface
+- **Configurable Display Duration**: User-adjustable notification display time (2-15 seconds) with TV-optimized settings UI
 - **Database Persistence**: Room database stores subscriptions and message history across app restarts
 - **Foreground Service**: Uses a persistent foreground service to maintain connection in the background
 - **Dual Notification System**: Overlay notifications (silent) or heads-up notifications (with sound) as fallback
@@ -93,8 +94,8 @@ The app uses a dual notification system:
 
 1. **Overlay Notifications (Preferred)**: Silent, full-screen overlays when SYSTEM_ALERT_WINDOW permission is granted
    - Displayed via WindowManager
-   - Auto-dismiss after 5 seconds
-   - Queued to prevent overlap
+   - Auto-dismiss after configurable duration (default: 5 seconds, range: 2-15 seconds)
+   - Queued to prevent overlap with 1-second gap between notifications
 
 2. **Heads-up Notifications (Fallback)**: Standard Android notifications with sound when overlay permission is denied or overlay is blocked by DRM content
    - Uses notification channel with sound
@@ -117,10 +118,12 @@ The app uses a dual notification system:
    - Accessibility support with content descriptions
 
 2. **SubscriptionsScreen** (`ui/SubscriptionsScreen.kt`)
-   - TV-optimized UI for managing topic subscriptions
+   - TV-optimized UI for managing topic subscriptions and notification settings
    - Add, toggle, and delete subscriptions
+   - Configurable notification display duration (2s, 3s, 5s, 7s, 10s, 15s)
    - Input validation with TopicValidator
    - Dialog-based interfaces for add/delete operations
+   - Real-time settings preview with visual feedback
 
 3. **NtfyWebSocketService** (`service/NtfyWebSocketService.kt`)
    - Singleton service managing WebSocket connections to ntfy.sh
@@ -145,7 +148,9 @@ The app uses a dual notification system:
    - Displays notifications as full-screen overlay using WindowManager
    - Custom lifecycle owner to prevent memory leaks
    - Message queue system to prevent notification overlap
-   - Auto-dismisses after 5 seconds with 1s gap between messages
+   - Auto-dismisses after user-configured duration (2-15 seconds) with 1s gap between messages
+   - Thread-safe duration caching to ensure consistent display timing
+   - Proper coroutine cancellation and resource cleanup
    - Proper error handling for SecurityException and BadTokenException
    - Accessibility support
 
@@ -187,8 +192,11 @@ The app uses a dual notification system:
     - Helper methods for permission checks
 
 12. **NtfyConfig** (`util/NtfyConfig.kt`)
-    - Legacy configuration manager using SharedPreferences
-    - Note: Subscription management now primarily uses Room database
+    - Configuration manager using SharedPreferences
+    - Stores notification display duration (2-15 seconds range)
+    - Input validation with automatic value coercion
+    - Thread-safe property access
+    - Legacy support for topic storage (subscriptions now use Room database)
 
 ## Permissions
 
@@ -291,11 +299,29 @@ subscriptionRepository.toggleSubscriptionStatus(subscriptionId, isActive = true)
 subscriptionRepository.deleteSubscriptionWithMessages(subscription)
 ```
 
-### Adjust Overlay Duration
+### Adjust Notification Display Duration
 
-Edit `OverlayNotificationView.kt:116` to change the display duration:
+**User-Configurable Setting:**
+1. Open the app on your Android TV
+2. Navigate to "Manage Subscriptions"
+3. In the "Notification Settings" section, select your preferred duration:
+   - **2 seconds** - Quick glance notifications
+   - **3 seconds** - Brief messages
+   - **5 seconds** - Default (recommended)
+   - **7 seconds** - Longer reading time
+   - **10 seconds** - Extended display
+   - **15 seconds** - Maximum duration
+
+Settings are saved automatically and applied immediately to new notifications. The gap between queued notifications remains fixed at 1 second.
+
+**Programmatic Access:**
 ```kotlin
-delay(6000) // 5s display + 1s gap (change as needed)
+val config = NtfyConfig(applicationContext)
+config.displayDurationSeconds = 7  // Set to 7 seconds
+
+// Or read current value
+val currentDuration = config.displayDurationSeconds
+val durationMs = config.displayDurationMs  // Get in milliseconds
 ```
 
 ### Modify Priority Colors
@@ -418,6 +444,7 @@ adb logcat | grep -E "(Ntfy|WebSocket|Overlay)"
 - [ ] Per-topic notification settings (sound, priority, overlay behavior)
 - [ ] Message search functionality
 - [ ] Notification statistics and analytics
+- [ ] Configurable gap duration between queued notifications (currently fixed at 1 second)
 
 ## License
 
@@ -449,7 +476,15 @@ This app uses several excellent open-source libraries. See [ATTRIBUTIONS.md](ATT
 
 ## Changelog
 
-### Version 2.0 (Current)
+### Version 1.2 (Current - October 2025)
+- ✅ **Configurable Display Duration**: User-adjustable notification display time (2-15 seconds)
+- ✅ **Notification Settings UI**: TV-optimized settings interface in Subscriptions screen
+- ✅ **Input Validation**: Range validation (2-15 seconds) with automatic value coercion
+- ✅ **Thread-Safe Config Access**: Cached duration values for consistent display timing
+- ✅ **Improved Resource Cleanup**: Enhanced coroutine cancellation for message queue processing
+- ✅ **Code Quality Improvements**: Fixed thread safety issues and improved error handling
+
+### Version 2.0
 - ✅ **Multiple Subscriptions**: Add and manage multiple ntfy topics
 - ✅ **Database Persistence**: Room database for subscriptions and messages
 - ✅ **Subscription Management UI**: TV-optimized interface for managing topics

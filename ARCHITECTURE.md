@@ -165,6 +165,15 @@ private fun startForegroundService() {
 - Access: `subscriptionRepository.addSubscription("new-topic")`
 - Persists across app restarts
 
+### Display Duration Configuration
+- Stored in SharedPreferences via `NtfyConfig`
+- Property: `displayDurationSeconds` (Int, default: 5)
+- Helper: `displayDurationMs` (Long, returns milliseconds)
+- Access: `config.displayDurationSeconds = 7` // Set to 7 seconds
+- User-configurable via Settings UI in Subscriptions screen
+- Available options: 2, 3, 5 (default), 7, 10, 15 seconds
+- Persists across app restarts
+
 ### Reconnection Tuning
 Located in `NtfyWebSocketService.kt:42-44`:
 ```kotlin
@@ -180,10 +189,13 @@ private const val MAX_MESSAGES = 100
 ```
 
 ### Overlay Display Duration
-Located in `OverlayNotificationView.kt` (approximate line 116):
-```kotlin
-delay(6000) // 5s display + 1s gap between messages
-```
+**User-configurable** via Settings UI in Subscriptions screen.
+- Default: 5 seconds
+- Available options: 2, 3, 5, 7, 10, 15 seconds
+- Gap between queued notifications: Fixed at 1 second
+- Implementation in `OverlayNotificationView.kt`:
+  - Line 121: `delay(config.displayDurationMs + 1000)` // Queue delay
+  - Line 168: `delay(config.displayDurationMs)` // Auto-dismiss timer
 
 ---
 
@@ -287,11 +299,11 @@ curl -H "Title: Tagged" -H "Tags: warning,urgent" \
 | `service/NtfyWebSocketService.kt` | WebSocket singleton, reconnection logic, message parsing |
 | `service/NtfyForegroundService.kt` | Android Foreground Service for background operation |
 | `ui/OverlayNotificationView.kt` | Overlay display with custom lifecycle |
-| `ui/SubscriptionsScreen.kt` | Subscription management UI |
+| `ui/SubscriptionsScreen.kt` | Subscription management UI and notification settings |
 | `data/db/AppDatabase.kt` | Room database configuration and migrations |
 | `data/repository/SubscriptionRepository.kt` | Subscription CRUD operations |
 | `data/repository/MessageRepository.kt` | Message persistence layer |
-| `util/NtfyConfig.kt` | SharedPreferences configuration manager (legacy) |
+| `util/NtfyConfig.kt` | SharedPreferences configuration (display duration, legacy topic storage) |
 | `util/PermissionHelper.kt` | Permission handling with Activity Result API |
 | `util/NotificationHelper.kt` | Heads-up notifications and notification management |
 | `util/TopicValidator.kt` | Topic name validation |

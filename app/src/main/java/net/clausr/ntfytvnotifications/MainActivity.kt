@@ -124,7 +124,7 @@ class MainActivity : ComponentActivity() {
         // Initialize services
         ntfyService = NtfyWebSocketService.getInstance(subscriptionRepository, messageRepository)
         ntfyService.setContext(applicationContext)
-        overlayView = OverlayNotificationView(applicationContext)
+        overlayView = OverlayNotificationView(applicationContext, config)
 
         setContent {
             var showSubscriptionsScreen by remember { mutableStateOf(false) }
@@ -136,6 +136,7 @@ class MainActivity : ComponentActivity() {
                     if (showSubscriptionsScreen) {
                         SubscriptionsScreen(
                             subscriptionRepository = subscriptionRepository,
+                            config = config,
                             onBackPressed = {
                                 showSubscriptionsScreen = false
                                 // Reconnect with updated subscriptions
