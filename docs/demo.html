@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Demo - Ntfy TV Notifications</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .hero {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .hero h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin: 0 0 20px 0;
+        }
+        .hero p {
+            font-size: 1.2em;
+            color: #666;
+            margin: 0 0 30px 0;
+        }
+        .video-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 8px;
+        }
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .description {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .description h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .description ul {
+            padding-left: 20px;
+        }
+        .description li {
+            margin: 10px 0;
+        }
+        .timestamps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .timestamps h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .timestamp {
+            display: flex;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+        .timestamp-time {
+            font-weight: bold;
+            color: #667eea;
+            min-width: 80px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background 0.3s;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #764ba2;
+        }
+        .btn-secondary {
+            background: #48bb78;
+        }
+        .btn-secondary:hover {
+            background: #38a169;
+        }
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.9;
+        }
+        .footer a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>📹 App Demonstration</h1>
+            <p>See Ntfy TV Notifications in action</p>
+            <div style="margin-top: 20px;">
+                <a href="index.html" class="btn btn-secondary">← Back to Home</a>
+                <a href="https://github.com/clausilein/ntfy-tv-notifications" class="btn" target="_blank">View on GitHub</a>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <h2 style="color: #667eea; margin-top: 0;">Video Demonstration</h2>
+            <div class="video-wrapper">
+                <video controls preload="metadata">
+                    <source src="video/demo.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                    <a href="video/demo.webm">Download the video</a> instead.
+                </video>
+            </div>
+
+            <div class="note" style="margin-top: 20px;">
+                <strong>💡 Tip:</strong> This video demonstrates how the app uses the FOREGROUND_SERVICE_DATA_SYNC
+                permission to maintain a persistent WebSocket connection for real-time notification delivery.
+            </div>
+        </div>
+
+        <div class="description">
+            <h2>What You'll See in This Demo</h2>
+
+            <div class="timestamps">
+                <h3>📍 Video Timestamps</h3>
+                <div class="timestamp">
+                    <span class="timestamp-time">0:00-0:30</span>
+                    <span>App launch and service start - Foreground notification appears</span>
+                </div>
+                <div class="timestamp">
+                    <span class="timestamp-time">0:30-1:00</span>
+                    <span>Foreground notification visible in notification shade</span>
+                </div>
+                <div class="timestamp">
+                    <span class="timestamp-time">1:00-2:00</span>
+                    <span>Real-time data sync - Sending and receiving notifications</span>
+                </div>
+                <div class="timestamp">
+                    <span class="timestamp-time">2:00-2:30</span>
+                    <span>Background operation - Service continues while app is backgrounded</span>
+                </div>
+                <div class="timestamp">
+                    <span class="timestamp-time">2:30-3:00</span>
+                    <span>Service stop - Foreground notification disappears</span>
+                </div>
+            </div>
+
+            <h3>Key Features Demonstrated</h3>
+            <ul>
+                <li><strong>Foreground Service:</strong> Persistent notification indicating active connection</li>
+                <li><strong>Real-time Sync:</strong> Instant notification delivery via WebSocket</li>
+                <li><strong>Data Transfer:</strong> Messages synced from ntfy.sh server to local database</li>
+                <li><strong>Background Operation:</strong> Service continues running when app is backgrounded</li>
+                <li><strong>User Control:</strong> Easy start/stop via app interface</li>
+                <li><strong>TV Optimization:</strong> Remote control navigation and large UI elements</li>
+            </ul>
+
+            <h3>Technical Details</h3>
+            <p><strong>Foreground Service Type:</strong> <code>dataSync</code></p>
+            <p><strong>Purpose:</strong> Maintains persistent WebSocket connection to receive real-time notification data from ntfy.sh servers</p>
+            <p><strong>Data Flow:</strong></p>
+            <ul>
+                <li>Receives notification messages via WebSocket (data download)</li>
+                <li>Saves received messages to local Room database</li>
+                <li>Displays notifications via overlay or system notifications</li>
+                <li>Syncs subscription status with server</li>
+            </ul>
+
+            <h3>Why Foreground Service?</h3>
+            <p>The app requires a foreground service because:</p>
+            <ul>
+                <li>Real-time notifications need persistent WebSocket connection</li>
+                <li>WorkManager cannot be used (15-minute minimum interval vs. instant delivery)</li>
+                <li>Users expect immediate notification delivery (home automation, server alerts)</li>
+                <li>Foreground notification keeps users informed of active monitoring</li>
+            </ul>
+        </div>
+
+        <div class="description">
+            <h2>Download & Installation</h2>
+            <p>Want to try the app? Here's how to get started:</p>
+            <ol>
+                <li>Download the latest APK from <a href="https://github.com/clausilein/ntfy-tv-notifications/releases" target="_blank">GitHub Releases</a></li>
+                <li>Enable "Unknown Sources" in your Android TV settings</li>
+                <li>Install the APK using a file manager</li>
+                <li>Grant required permissions (overlay and notifications)</li>
+                <li>Add your ntfy.sh topics and start receiving notifications!</li>
+            </ol>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://github.com/clausilein/ntfy-tv-notifications/releases" class="btn" target="_blank">Download Latest Release</a>
+                <a href="https://github.com/clausilein/ntfy-tv-notifications#readme" class="btn btn-secondary" target="_blank">Read Documentation</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                Ntfy TV Notifications is open source software licensed under Apache License 2.0<br>
+                <a href="https://github.com/clausilein/ntfy-tv-notifications/blob/main/LICENSE" target="_blank">View License</a> |
+                <a href="privacy-policy.html">Privacy Policy</a> |
+                <a href="mailto:android-ntfy@clausr.net">Contact</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -2,6 +2,17 @@
 
 An Android TV app that receives real-time notifications from [ntfy.sh](https://ntfy.sh) and displays them as overlay notifications.
 
+## 📹 Demo Video
+
+**[Watch the app demonstration](https://clausilein.github.io/ntfy-tv-notifications/demo.html)** to see how it works on Android TV.
+
+The video shows:
+- Real-time notification delivery via WebSocket
+- Foreground service operation
+- TV-optimized interface with remote control navigation
+- Configurable display duration settings
+- Background notification handling
+
 ## Features
 
 - **Real-time WebSocket Connection**: Connects to ntfy.sh via WebSocket for instant notifications
